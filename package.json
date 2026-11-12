@@ -1,0 +1,10 @@
+{
+  "name": "poker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test check/*.test.js src/*.test.js",
+    "original": "node --test check/original.js",
+    "every": "node check/every.js"
+  }
+}

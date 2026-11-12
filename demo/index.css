@@ -1,0 +1,52 @@
+/* The demo's own rules, over brand.css: the form, each hand with its grid,
+   and the badge of a winner. A colour that differs by theme is
+   light-dark(light, dark), which follows the theme brand.css sets. */
+
+:root {
+  --red: light-dark(#b3261e, #f08a80);
+  --line: light-dark(#767676, #8a8a8a);
+  --held: light-dark(#fde7d4, #4a2a10);
+}
+
+.options {
+  display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: end;
+  margin: 0 0 12px; padding: 10px 12px; border: 1px solid var(--hair); border-radius: 3px;
+}
+.options legend { padding: 0 4px; color: var(--muted); }
+.options label, .lines { display: flex; flex-direction: column; gap: 2px; }
+
+select, textarea, button { font: inherit; color: var(--ink); background: var(--bg); }
+select, button { min-height: 44px; padding: 0 12px; border: 1px solid var(--line); border-radius: 3px; }
+button { color: var(--link); cursor: pointer; }
+button:hover { border-color: var(--link); }
+button:disabled { color: var(--muted); cursor: progress; }
+textarea {
+  width: 100%; resize: vertical; padding: 6px 8px;
+  font-family: var(--mono); font-size: 13px;
+  border: 1px solid var(--line); border-radius: 3px;
+}
+
+.summary { margin: 16px 0 8px; font-weight: 700; }
+
+.hands { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: 12px; }
+.hand { border: 1px solid var(--hair); border-radius: 3px; padding: 10px 12px; min-width: 0; }
+.hand.won { border-color: var(--good); }
+.hand h3 { margin: 0 0 4px; }
+.badge {
+  margin-left: 8px; padding: 0 6px; font-size: 12px; font-weight: 400; vertical-align: middle;
+  color: var(--good); border: 1px solid var(--good); border-radius: 10px;
+}
+.cards { font-size: 18px; }
+.card { font-family: var(--mono); }
+.card.red { color: var(--red); }
+
+.scroll { overflow-x: auto; }
+.grid { border-collapse: collapse; font: 12px/1 var(--mono); }
+.grid th, .grid td { width: 22px; height: 22px; padding: 0; text-align: center; border: 1px solid var(--hair); }
+.grid th { font-weight: 400; color: var(--muted); }
+.grid tbody th { font-size: 14px; }
+.grid tbody tr:nth-child(-n+2) th { color: var(--red); }
+.grid td.held { background: var(--held); color: var(--ink); }
+.grid .sum, .grid .sums td { color: var(--link); }
+
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

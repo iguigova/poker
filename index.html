@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>poker: a hand as one number</title>
+<meta name="description" content="A poker hand evaluator that turns a hand of 5 to 7 cards into one whole number, so the best hand is the highest. Deal a showdown, see the grid it reads, and check every 5-card hand in your browser.">
+<link rel="stylesheet" href="../brand.css">
+<link rel="stylesheet" href="demo/index.css">
+<script src="../brand.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>poker</h1>
+      <p class="tag">A poker hand as one number: the best hand is the highest.</p>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>What it is</h2>
+      <div>
+        <p>A poker hand evaluator that turns a hand of 5 to 7 cards into one
+          whole number. The better hand gets the higher number, and equal
+          hands get the same one. So the winner of a showdown is just the
+          highest score: no sorting, and no comparing one hand with
+          another.</p>
+        <ul>
+          <li>Every hand scores between 372,197 (7 5 4 3 2) and 6,783,750 (a
+            royal flush). That fits in 23 bits, in exact integer
+            arithmetic.</li>
+          <li>The score reads back: its digits are the hand's category and
+            the cards that decide a tie.</li>
+          <li>Five-card draw and Texas hold'em take the same path, with no
+            trying of the 21 ways to pick five cards from seven.</li>
+          <li>It is checked on every hand of 5, 6 and 7 cards. The 5-card
+            check runs right here, below.</li>
+          <li>One small JavaScript file, with no dependencies.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>How it works</h2>
+      <div>
+        <ol>
+          <li>Lay the hand out as a grid: a row per suit and a column per
+            rank.</li>
+          <li>Count down each column. A count of 4, 3 or 2 is four, three or
+            two of a kind.</li>
+          <li>Count along each row. Five in one row is a flush.</li>
+          <li>Look for five filled columns side by side. That is a straight,
+            and the ace also counts below the 2.</li>
+          <li>Read it all from the high end, so the five cards that play are
+            the first ones met.</li>
+          <li>Write the score as the hand's category, 0 for high card up to 8
+            for a straight flush, then the ranks that break ties, as digits
+            in base 15. A rank is at most 14, so a digit never carries into
+            the next one, and a better category always wins.</li>
+        </ol>
+        <p>Each hand below shows its grid with the counts it reads, and its
+          score in base 15: the first digit is the category, the rest are
+          the deciding ranks, with 10 to 14 written a to e.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Try it</h2>
+      <div>
+        <form id="game" class="game">
+          <fieldset class="options">
+            <legend>Hands</legend>
+            <label>Example
+              <select id="example">
+                <option value="joe">Joe, Bob and Sally</option>
+                <option value="wheel">The lowest straight</option>
+                <option value="threes">Two threes in seven cards</option>
+              </select>
+            </label>
+            <button type="button" id="draw">Deal five-card draw</button>
+            <button type="button" id="holdem">Deal Texas hold'em</button>
+          </fieldset>
+          <label class="lines">One hand a line: a name, then 5 to 7 cards, each a rank (2 to 10, J, Q, K, A) and a suit (D, H, C, S)
+            <textarea id="lines" rows="5" spellcheck="false"></textarea>
+          </label>
+        </form>
+
+        <p id="summary" class="summary" aria-live="polite"></p>
+        <div id="hands" class="hands"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Every hand</h2>
+      <div>
+        <p>There are 2,598,960 hands of 5 cards, and the rules sort them into
+          7,462 kinds. The check scores every hand, then holds the scores to
+          a separate, textbook ranking: every hand of a kind must score the
+          same, and the scores must rise kind by kind. It runs in your
+          browser, on the same code as above.</p>
+        <p><button type="button" id="check">Check every 5-card hand</button></p>
+        <p id="verdict" class="summary" aria-live="polite"></p>
+        <p>Each 6- and 7-card hand must score the same as the best 5 cards in
+          it. <code>npm run every</code> checks all 20,358,520 hands of 6
+          cards and all 133,784,560 of 7.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Where it comes from</h2>
+      <div>
+        <p>The grid is the idea of pokerIn4Hours, which I wrote in 2011 for a
+          four-hour developer test. Its code is kept as it was in
+          <a href="https://github.com/iguigova/poker/tree/main/original"><code>original/</code></a>,
+          and the same checks run on it. The
+          <a href="https://github.com/iguigova/poker#readme">README</a> says
+          what they find, line by line.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="line"><a href="/">Ilka Guigova</a> · <a href="https://github.com/iguigova/poker">github.com/iguigova/poker</a> · MIT</div>
+    <div class="band" aria-hidden="true"></div>
+  </footer>
+</div>
+<script type="module" src="demo/index.js"></script>
+</body>
+</html>
